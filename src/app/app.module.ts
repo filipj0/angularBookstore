@@ -7,8 +7,11 @@ import { ReturnComponent } from './return/return.component';
 import { LateFeesComponent } from './late-fees/late-fees.component';
 import { CheckedOutComponent } from './checked-out/checked-out.component';
 import { MenuComponent } from './menu/menu.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { CheckOut } from './entities/checkout';
+import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import {Globals} from "./testData/global";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,9 +25,13 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    Globals
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

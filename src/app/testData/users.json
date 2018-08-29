@@ -1,10 +1,26 @@
 {
-  "user1": {
+  "u1": {
     "name": "Marko",
     "surname": "Japetić"
   },
-  "user2": {
+  "u2": {
     "name": "Ivan",
     "surname": "Horvat"
+  },
+  "u3": {
+    "name": "Stjepan",
+    "surname": "Radović"
+  },
+  "u4": {
+    "name": "Sven",
+    "surname": "Prpić"
+  },
+  "u5": {
+    "name": "Ratko",
+    "surname": "Milić"
+  },
+  "u6": {
+    "name": "Bojan",
+    "surname": "Šimunić"
   }
 }

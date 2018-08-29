@@ -1,33 +1,42 @@
 <div id="borrowContainer">
   <div class="inner">
     <div class="left-side">
-      <div>
-        <label for="borrowUserSelect">Korisnik:</label>
-        <select id="borrowUserSelect">
-          <option *ngFor="let key of objectKeys(users$)" value="users$[key].id">{{ users$[key].name }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="borrowBookSelect">Naslov:</label>
-        <select id="borrowBookSelect"></select>
-      </div>
-      <div>
-        <label for="borrowDurationSelect">Trajanje posudbe:</label>
-        <select id="borrowDurationSelect">
-          <option value="day">1 dan</option>
-          <option value="week">1 tjedan</option>
-          <option value="month">1 mjesec</option>
-          <option value="3month">3 mjeseca</option>
-        </select>
-      </div>
-      <div>
-        <button id="borrowConfirm">Potvrdi</button>
-      </div>
+      <form #borrowForm="ngForm" (ngSubmit)="borrowForm.form.valid && checkOutBook(bookId, userId, checkoutLength)" novalidate>
+        <div>
+          <label for="borrowUserSelect">Korisnik:</label>
+          <select id="borrowUserSelect" [(ngModel)]="userId" name="userId" required>
+            <option *ngFor="let key of objectKeys(users$)" ngValue="{{users$[key].id}}">{{ users$[key].name }} {{users$[key].surname }}</option>
+          </select>
+          <div *ngIf="borrowForm.submitted && userId.invalid" class="validation-message">
+            <div>Molimo odaberite korisnika!</div>
+          </div>
+        </div>
+        <div>
+          <label for="borrowBookSelect">Naslov:</label>
+          <select id="borrowBookSelect" [(ngModel)]="bookId" name="bookId">
+            <option *ngFor="let key of objectKeys(books$)" ngValue="{{key}}">{{ books$[key].title }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="borrowDurationSelect">Trajanje posudbe:</label>
+          <select id="borrowDurationSelect" [(ngModel)]="checkoutLength" name="checkoutLength">
+            <option ngValue="1">1 dan</option>
+            <option ngValue="7">1 tjedan</option>
+            <option ngValue="30">1 mjesec</option>
+            <option ngValue="90">3 mjeseca</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" id="borrowConfirm">Potvrdi</button>
+        </div>
+      </form>
     </div>
     <div class="right-side">
-      <div id="borrowInfoBook">Naslov:</div>
-      <div id="borrowInfoCheckoutDate">Datum posudbe:</div>
-      <div id="borrowInfoReturnDate">Datum povratka:</div>
+      <div id="borrowInfoBookTitle">Naslov knjige: {{books$[bookId].title}}</div>
+      <div id="borrowInfoBookAuthor">Autor knjige: {{books$[bookId].author}}</div>
+      <div id="borrowInfoBookYear">Godina izdanja: {{books$[bookId].year}}</div>
+      <div id="borrowInfoCheckoutDate">Datum posudbe: {{todayDate | date:'dd.LL.yyyy.'}}</div>
+      <div id="borrowInfoReturnDate">Datum povratka: {{getReturnDate(checkoutLength) | date:'dd.LL.yyyy.'}}</div>
       <div id="borrowMessage"></div>
     </div>
   </div>

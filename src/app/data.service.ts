@@ -13,6 +13,10 @@ export class DataService {
   }
 
   getBooks(){
-    return this.http.get('./src/app/testData/books.json')
+    return this.http.get('./src/app/testData/books.json');
+  }
+
+  getBookInfo(bookId){
+    return this.http.get('./src/app/testData/books.json/'+bookId);
   }
 }

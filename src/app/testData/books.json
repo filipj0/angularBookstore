@@ -1,0 +1,32 @@
+{
+  "b1": {
+    "title": "Pustolovine Toma Sawyera",
+    "author": "Mark Twain",
+    "year": "1876."
+  },
+  "b2": {
+    "title": "Zločin i kazna",
+    "author": "Fjodor Mihajlovič Dostojevski",
+    "year": "1866."
+  },
+  "b3": {
+    "title": "Kome zvono zvoni",
+    "author": "Ernest Hemingway",
+    "year": "1940."
+  },
+  "b4": {
+    "title": "Stranac",
+    "author": "Albert Camus",
+    "year": "1942."
+  },
+  "b5": {
+    "title": "Crvendać",
+    "author": "Jo Nesbø",
+    "year": "2000."
+  },
+  "b6": {
+    "title": "Uliks",
+    "author": "James Joyce",
+    "year": "1922."
+  }
+}

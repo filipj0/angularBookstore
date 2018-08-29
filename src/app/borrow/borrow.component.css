@@ -15,7 +15,7 @@
   top: 20%;
   margin-top: auto;
   margin-bottom: auto;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(2, 50%);
 }
 
 #borrowContainer .left-side {
@@ -30,7 +30,6 @@
 
 #borrowContainer .left-side div{
   justify-self: start;
-  align-self: center;
   min-height: 60px;
 }
 
@@ -38,24 +37,29 @@
   justify-self: start;
   align-self: center;
   min-height: 60px;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 label {
-  font-size: 30px;
+  font-size: 20px;
   float: left;
   padding-right: 10px;
 }
 
 select {
-  font-size: 30px;
+  font-size: 20px;
   padding: 3px;
 }
 
 button {
-  font-size: 30px;
+  font-size: 20px;
   padding: 10px 30px 10px 30px;
   cursor: pointer;
+}
+
+.validation-message div{
+  color: red;
+  font-size: 15px;
 }
 
 
