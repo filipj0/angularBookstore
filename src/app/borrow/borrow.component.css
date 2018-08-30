@@ -57,9 +57,13 @@ button {
   cursor: pointer;
 }
 
-.validation-message div{
+.validate-msg{
   color: red;
   font-size: 15px;
+}
+
+#borrowMessage {
+  color: green;
 }
 
 

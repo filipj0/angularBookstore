@@ -2,31 +2,37 @@
   "b1": {
     "title": "Pustolovine Toma Sawyera",
     "author": "Mark Twain",
-    "year": "1876."
+    "year": "1876.",
+    "id": "b1"
   },
   "b2": {
     "title": "Zločin i kazna",
     "author": "Fjodor Mihajlovič Dostojevski",
-    "year": "1866."
+    "year": "1866.",
+    "id": "b2"
   },
   "b3": {
     "title": "Kome zvono zvoni",
     "author": "Ernest Hemingway",
-    "year": "1940."
+    "year": "1940.",
+    "id": "b3"
   },
   "b4": {
     "title": "Stranac",
     "author": "Albert Camus",
-    "year": "1942."
+    "year": "1942.",
+    "id": "b4"
   },
   "b5": {
     "title": "Crvendać",
     "author": "Jo Nesbø",
-    "year": "2000."
+    "year": "2000.",
+    "id": "b5"
   },
   "b6": {
     "title": "Uliks",
     "author": "James Joyce",
-    "year": "1922."
+    "year": "1922.",
+    "id": "b6"
   }
 }
