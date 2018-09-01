@@ -5,4 +5,8 @@ export class CheckOut{
     public checkoutDate: Date,
     public returnDate: Date
   ){}
+
+  getBookTitle(){
+
+  }
 }

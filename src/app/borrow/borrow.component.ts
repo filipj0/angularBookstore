@@ -6,6 +6,7 @@ import {NgModule} from "@angular/core";
 import {CheckOut} from "../entities/checkout";
 import {Globals} from "../testData/global";
 import {BrowserModule} from "@angular/platform-browser";
+import {Book} from "../entities/book";
 
 @Component({
   selector: 'app-borrow',
@@ -17,15 +18,15 @@ import {BrowserModule} from "@angular/platform-browser";
 export class BorrowComponent implements OnInit {
   borrowForm:FormGroup;
   submitted = false;
-  objectKeys$ = Object.keys;
-  users$:Object;
-  books$:Object;
-  allBooks:Object;
-  todayDate$:Date = new Date();
-  checkOut$:Object = {};
+  objectKeys = Object.keys;
+  users:Object;
+  books:Object;
+  allBooks:Object = this.data.getBooks();
+  todayDate:Date = new Date();
+  checkOut:Object = {};
 
   constructor(private data:DataService, private formBuilder:FormBuilder) {
-
+    Array.prototype.
   }
 
   ngOnInit() {
@@ -36,51 +37,56 @@ export class BorrowComponent implements OnInit {
     });
 
     this.data.getUsers().subscribe(
-      data => this.users$ = data
+      data => this.users = data
     );
 
     this.data.getBooks().subscribe(
-      data => this.getAvailableBooks(data)
+      data => this.books = this.getAvailableBooks(data)
     );
+
   }
 
   get f() {
     return this.borrowForm.controls;
   }
 
-  getAvailableBooks(books) {
-    this.allBooks = books;
-    console.log("get available books");
+  getAvailableBooks(booksList) {
+    this.prepareBooks(booksList);
     var availableBooks = [];
-    var bookId;
-    console.log("checkedOut", this.data.getCheckedOutData());
-    for (bookId in books) {
-      if (this.data.getCheckedOutData().filter(item => item.bookId == bookId).length == 0) {
-        availableBooks.push(books[bookId]);
+    for (let book of this.allBooks) {
+      if (this.data.getCheckedOutData().filter(item => item.bookId == book.getId()).length == 0) {
+        availableBooks.push(book);
       }
     }
-    console.log("checkedOut", this.data.getCheckedOutData());
-    console.log("availableBooks", availableBooks);
-    this.books$ = availableBooks;
+    return availableBooks;
+  }
+
+  prepareBooks(booksList) {
+    var books = [];
+    var bookId;
+    for (bookId in booksList) {
+      var bookData = booksList[bookId];
+      var book = new Book(bookId, bookData.title, bookData.author, bookData.year);
+      books.push(bookData);
+    }
+    this.allBooks = books;
   }
 
   getReturnDate(days) {
-    var date = new Date(this.todayDate$);
+    var date = new Date(this.todayDate);
     date.setDate(date.getDate() + parseInt(days));
     return date;
   }
 
   checkOutBook(bookId, userId, checkoutLength) {
-    console.log("checkout start");
     this.submitted = true;
     if (this.borrowForm.valid) {
       var returnDate = this.getReturnDate(checkoutLength);
-      var checkOutData = new CheckOut(bookId, userId, this.todayDate$, returnDate);
+      var checkOutData = new CheckOut(bookId, userId, this.todayDate, returnDate);
       this.data.addToCheckedOut(checkOutData);
-      console.log("checked out",  this.data.getCheckedOutData());
       document.getElementById("borrowMessage").innerHTML = "Posudba uspješna!";
-      this.books$ = this.getAvailableBooks(this.allBooks);
-     this.getAvailableBooks(this.allBooks);
+      this.books = this.getAvailableBooks(this.allBooks);
+      this.getAvailableBooks(this.allBooks);
     }
   }
 }

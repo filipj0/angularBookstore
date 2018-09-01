@@ -7,14 +7,13 @@ import {DataService} from "../data.service";
   styleUrls: ['./return.component.css']
 })
 export class ReturnComponent implements OnInit {
+  checkOutItems:Array;
 
   constructor(private data:DataService) {
 
   }
 
-
   ngOnInit() {
-    //this.data.removeFromCheckedOut();
+    this.checkOutItems = this.data.getCheckedOutData();
   }
-
 }
