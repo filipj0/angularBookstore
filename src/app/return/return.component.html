@@ -1,6 +1,20 @@
-<!--<div id="returnContainer">
-  <ul [(ngModel)]="checkOutItem" name="checkOutItem">
-    <li *ngFor="let item in checkOutItems">{{ item.getBookTitle() }}</li>
+<div id="returnContainer">
+  <div class="header">
+    <div>Korisnik</div>
+    <div>Naslov</div>
+    <div>Datum posudbe</div>
+    <div>Datum povratka</div>
+    <div>Zakasnina</div>
+  </div>
+  <ul name="checkOutItem">
+    <li *ngFor="let item of checkOutItems" (click)="selectItem($event)" attr.itemId="{{item.id}}">
+      <div>{{ getUserName(item.getUserId()) }}</div>
+      <div>{{ item.getBookTitle() }}</div>
+      <div>{{ item.getChekoutDate() | date:'dd.LL.yyyy.' }}</div>
+      <div>{{ item.getReturnDate() | date:'dd.LL.yyyy.' }}</div>
+      <div>{{ calculateLateFees(item) }}</div>
+    </li>
   </ul>
-  <button></button>
-</div>-->
+  <button (click)="returnBook()">Potvrdi</button>
+  <div class="validate-msg">Odaberite knjigu!</div>
+</div>

@@ -1,32 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs';
-import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import {NgModule} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {CheckOut} from "../entities/checkout";
-import {Globals} from "../testData/global";
-import {BrowserModule} from "@angular/platform-browser";
-import {Book} from "../entities/book";
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-borrow',
   templateUrl: './borrow.component.html',
-  styleUrls: ['./borrow.component.css'],
-  providers: [Globals]
+  styleUrls: ['./borrow.component.css']
 })
 
 export class BorrowComponent implements OnInit {
   borrowForm:FormGroup;
   submitted = false;
   objectKeys = Object.keys;
+  toStr = JSON.stringify;
   users:Object;
   books:Object;
-  allBooks:Object = this.data.getBooks();
+  allBooks:Object;
   todayDate:Date = new Date();
-  checkOut:Object = {};
 
-  constructor(private data:DataService, private formBuilder:FormBuilder) {
-    Array.prototype.
+  constructor(public data:DataService, private formBuilder:FormBuilder) {
+
   }
 
   ngOnInit() {
@@ -39,6 +34,7 @@ export class BorrowComponent implements OnInit {
     this.data.getUsers().subscribe(
       data => this.users = data
     );
+
 
     this.data.getBooks().subscribe(
       data => this.books = this.getAvailableBooks(data)
@@ -53,8 +49,9 @@ export class BorrowComponent implements OnInit {
   getAvailableBooks(booksList) {
     this.prepareBooks(booksList);
     var availableBooks = [];
+    // @ts-ignore
     for (let book of this.allBooks) {
-      if (this.data.getCheckedOutData().filter(item => item.bookId == book.getId()).length == 0) {
+      if (this.data.getCheckedOutData().filter(item => item.bookId == book.id).length == 0) {
         availableBooks.push(book);
       }
     }
@@ -66,27 +63,36 @@ export class BorrowComponent implements OnInit {
     var bookId;
     for (bookId in booksList) {
       var bookData = booksList[bookId];
-      var book = new Book(bookId, bookData.title, bookData.author, bookData.year);
       books.push(bookData);
     }
     this.allBooks = books;
   }
 
-  getReturnDate(days) {
+  getReturnDate() {
+    var daysDiff = this.borrowForm.controls.checkOutLength.value;
     var date = new Date(this.todayDate);
-    date.setDate(date.getDate() + parseInt(days));
+    date.setDate(date.getDate() + parseInt(daysDiff));
     return date;
   }
 
-  checkOutBook(bookId, userId, checkoutLength) {
+  checkOutBook() {
     this.submitted = true;
     if (this.borrowForm.valid) {
-      var returnDate = this.getReturnDate(checkoutLength);
-      var checkOutData = new CheckOut(bookId, userId, this.todayDate, returnDate);
+      var bookId = this.bookData.id;
+      var bookTitle = this.bookData.title;
+      var userId = this.borrowForm.controls.user.value;
+      var returnDate = this.getReturnDate();
+      var checkOutData = new CheckOut(bookId, bookTitle, userId, this.todayDate, returnDate);
       this.data.addToCheckedOut(checkOutData);
-      document.getElementById("borrowMessage").innerHTML = "Posudba uspješna!";
+      $("#borrowMessage").show();
       this.books = this.getAvailableBooks(this.allBooks);
-      this.getAvailableBooks(this.allBooks);
     }
+    else {
+      $("#borrowMessage").hide();
+    }
+  }
+
+  get bookData() {
+    return JSON.parse(this.borrowForm.controls.book.value);
   }
 }

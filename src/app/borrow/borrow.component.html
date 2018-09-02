@@ -1,10 +1,10 @@
 <div id="borrowContainer">
   <div class="inner">
     <div class="left-side">
-      <form [formGroup]="borrowForm" (ngSubmit)="checkOutBook(bookId, userId, checkoutLength)">
+      <form [formGroup]="borrowForm" (ngSubmit)="checkOutBook()">
         <div class="form-group">
           <label for="borrowUserSelect">Korisnik:</label>
-          <select id="borrowUserSelect" formControlName="user" class="form-control" [(ngModel)]="userId" name="userId">
+          <select id="borrowUserSelect" formControlName="user" class="form-control">
             <option *ngFor="let key of objectKeys(users)" ngValue="{{key}}">{{ users[key].name }} {{ users[key].surname }}</option>
           </select>
           <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
@@ -13,8 +13,8 @@
         </div>
         <div class="form-group">
           <label for="borrowBookSelect">Naslov:</label>
-          <select id="borrowBookSelect" formControlName="book" class="form-control" [(ngModel)]="bookId" name="bookId">
-            <option *ngFor="let book of books" ngValue="{{book.id}}">{{ book.title }}</option>
+          <select id="borrowBookSelect" formControlName="book" class="form-control" name="book">
+            <option *ngFor="let book of books" ngValue="{{toStr(book)}}">{{ book.title }}</option>
           </select>
           <div *ngIf="submitted && f.book.errors" class="invalid-feedback">
             <div class="validate-msg">Molimo odaberite knjigu!</div>
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
           <label for="borrowDurationSelect">Trajanje posudbe:</label>
-          <select id="borrowDurationSelect" formControlName="checkOutLength" class="form-control" [(ngModel)]="checkoutLength" name="checkoutLength">
+          <select id="borrowDurationSelect" formControlName="checkOutLength" class="form-control">
             <option ngValue="1">1 dan</option>
             <option ngValue="7">1 tjedan</option>
             <option ngValue="30">1 mjesec</option>
@@ -34,16 +34,16 @@
         </div>
         <div class="form-group">
           <button type="submit" id="borrowConfirm" class="form-group">Potvrdi</button>
+          <div id="borrowMessage">Posudba uspješna!</div>
         </div>
       </form>
     </div>
     <div class="right-side">
-      <div id="borrowInfoBookTitle">Naslov knjige: {{allBooks[bookId].title}}</div>
-      <div id="borrowInfoBookAuthor">Autor knjige: {{allBooks[bookId].author}}</div>
-      <div id="borrowInfoBookYear">Godina izdanja: {{allBooks[bookId].year}}</div>
+      <div id="borrowInfoBookTitle">Naslov knjige: {{bookData.title}}</div>
+      <div id="borrowInfoBookAuthor">Autor knjige: {{bookData.author}}</div>
+      <div id="borrowInfoBookYear">Godina izdanja: {{bookData.year}}</div>
       <div id="borrowInfoCheckoutDate">Datum posudbe: {{todayDate | date:'dd.LL.yyyy.'}}</div>
-      <div id="borrowInfoReturnDate">Datum povratka: {{getReturnDate(checkoutLength) | date:'dd.LL.yyyy.'}}</div>
-      <div id="borrowMessage"></div>
+      <div id="borrowInfoReturnDate">Datum povratka: {{getReturnDate() | date:'dd.LL.yyyy.'}}</div>
     </div>
   </div>
 </div>

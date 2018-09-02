@@ -2,11 +2,14 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Globals{
-  checkedOut: Array = [];
+  checkedOut: Array<any> = this.getFromCache();
 
-  addToCheckedOut(data){
-    this.checkedOut.push(data);
+  getFromCache(){
+    /*if(localStorage["checkedOut"]){
+      return JSON.parse(localStorage["checkedOut"]);
+    }
+    else{*/
+      return [];
+    //}
   }
-
-  removeFromCheckedOut(){}
 }

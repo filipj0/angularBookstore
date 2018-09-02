@@ -1,0 +1,51 @@
+#returnContainer ul{
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  height: 40%;
+  overflow-y: scroll;
+}
+
+#returnContainer ul li {
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#returnContainer ul li:hover{
+  background-color: yellow;
+}
+
+#returnContainer ul li.selected{
+  background-color: limegreen;
+}
+
+#returnContainer ul li div, #returnContainer .header div{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+  padding: 5px 0 5px 0;
+}
+
+#returnContainer .header{
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+}
+
+#returnContainer button{
+  font-size: 20px;
+  position: absolute;
+  bottom: 30px;
+  padding: 5px;
+}
+
+#returnContainer .validate-msg{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  color: red;
+  display: none;
+}
